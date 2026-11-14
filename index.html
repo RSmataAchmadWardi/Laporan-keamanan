@@ -370,6 +370,11 @@
         .doc-icon {
             background: linear-gradient(45deg, #6f42c1, #8e44ad);
         }
+
+        /* Icon CCTV disamakan dengan tema (primary -> secondary) */
+        .cctv-icon {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+        }
         
         .card-content {
             color: #6c757d;
@@ -729,6 +734,8 @@
         .card:nth-child(5) { animation-delay: 0.5s; }
         .card:nth-child(6) { animation-delay: 0.6s; }
         .card:nth-child(7) { animation-delay: 0.7s; }
+        .card:nth-child(8) { animation-delay: 0.8s; }
+        .card:nth-child(9) { animation-delay: 0.9s; }
         
         .team-member {
             animation: fadeIn 0.5s ease-out forwards;
@@ -1006,6 +1013,29 @@
                         </a>
                     </div>
                 </div>
+
+                <!-- ============================================ -->
+                <!-- CARD PENGECEKAN CCTV (warna sama dgn card lain) -->
+                <!-- ============================================ -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Pengecekan CCTV</div>
+                        <div class="card-icon cctv-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://hendrihacker.github.io/Pengecekan-cctv/" target="_blank" class="btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            Buka link pengecekan cctv
+                        </a>
+                    </div>
+                </div>
+                <!-- ============================================ -->
+                <!-- END CARD CCTV                                -->
+                <!-- ============================================ -->
 
                 <!-- KEHILANGAN BARANG -->
                 <div class="card">
