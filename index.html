@@ -1,1199 +1,379 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Security - RS Mata Achmad Wardi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        :root {
-            --primary: #2a5c8d;
-            --secondary: #3a9efd;
-            --accent: #ff7e33;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
-            --info: #17a2b8;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f5f7fa;
-            color: #333;
-            background-image: url('susi.jpg');
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: 100% 100%;
-        }
-        
-        .dashboard {
-            display: flex;
-            min-height: 100vh;
-        }
-        
-        .sidebar {
-            width: 250px;
-            background: linear-gradient(135deg, var(--primary), #1a3a5a);
-            color: white;
-            padding: 20px 0;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            height: 100%;
-            z-index: 100;
-            transition: width 0.3s;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px 20px 25px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .logo-container::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 20%;
-            right: 20%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        }
-        
-        .hospital-logo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .hospital-logo:hover {
-            transform: translateY(-2px);
-        }
-
-        .main-logo-section {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .hospital-name {
-            font-size: 16px;
-            font-weight: 700;
-            color: white;
-            line-height: 1.2;
-            margin-right: 12px;
-        }
-
-        .hospital-name .rs-text {
-            font-size: 14px;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-
-        .hospital-name .main-text {
-            font-size: 18px;
-            font-weight: 800;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .logo-dots {
-            display: flex;
-            gap: 4px;
-            margin-left: 8px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            animation: pulse-dot 2s infinite ease-in-out;
-        }
-
-        .dot-1 {
-            background: linear-gradient(45deg, #4a90e2, #357abd);
-            animation-delay: 0s;
-        }
-
-        .dot-2 {
-            background: linear-gradient(45deg, #5bc0de, #46b8da);
-            animation-delay: 0.3s;
-        }
-
-        .dot-3 {
-            background: linear-gradient(45deg, #5cb85c, #449d44);
-            animation-delay: 0.6s;
-        }
-
-        @keyframes pulse-dot {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-            50% {
-                transform: scale(1.2);
-                opacity: 1;
-            }
-        }
-
-        .partner-logos {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            opacity: 0.85;
-            transition: opacity 0.3s ease;
-        }
-
-        .hospital-logo:hover .partner-logos {
-            opacity: 1;
-        }
-
-        .bwi-logo {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #d4af37, #ffd700);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .bwi-logo::before {
-            content: '☪';
-            font-size: 12px;
-            color: #8b4513;
-            font-weight: bold;
-        }
-
-        .bwi-logo::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .dompet-logo {
-            display: flex;
-            align-items: center;
-            background: linear-gradient(45deg, #27ae60, #2ecc71);
-            padding: 4px 8px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .dompet-logo:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
-        }
-
-        .dompet-triangle {
-            width: 0;
-            height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-bottom: 8px solid white;
-            margin-right: 6px;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
-        }
-
-        .dompet-text {
-            font-size: 8px;
-            font-weight: 800;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            line-height: 1;
-        }
-
-        .nav-menu {
-            list-style: none;
-            padding: 0 15px;
-        }
-        
-        .nav-item {
-            margin-bottom: 5px;
-        }
-        
-        .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            border-radius: 5px;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-        
-        .nav-link:hover, .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-        
-        .nav-link i {
-            margin-right: 10px;
-            font-size: 18px;
-            min-width: 24px;
-        }
-        
-        .main-content {
-            flex: 1;
-            margin-left: 250px;
-            padding: 30px;
-            transition: margin-left 0.3s;
-        }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        
-        .page-title h1 {
-            font-size: 28px;
-            color: var(--dark);
-            margin-bottom: 5px;
-        }
-        
-        .cards-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-        
-        .card {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            padding: 25px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-left: 5px solid var(--primary);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-        }
-        
-        .patient-icon {
-            background: linear-gradient(45deg, var(--success), #5cb85c);
-        }
-        
-        .review-icon {
-            background: linear-gradient(45deg, var(--danger), #d9534f);
-        }
-        
-        .daily-icon {
-            background: linear-gradient(45deg, var(--info), #17a2b8);
-        }
-        
-        .water-icon {
-            background: linear-gradient(45deg, #17a2b8, #138496);
-        }
-        
-        .readiness-icon {
-            background: linear-gradient(45deg, #fd7e14, #e67e22);
-        }
-
-        .patroli-icon {
-            background: linear-gradient(45deg, #20c997, #12b886);
-        }
-
-        .lost-icon {
-            background: linear-gradient(45deg, #dc3545, #c82333);
-        }
-
-        .doc-icon {
-            background: linear-gradient(45deg, #6f42c1, #8e44ad);
-        }
-
-        /* Icon CCTV disamakan dengan tema (primary -> secondary) */
-        .cctv-icon {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-        }
-        
-        .card-content {
-            color: #6c757d;
-            margin-bottom: 25px;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        
-        .card-footer {
-            display: flex;
-            justify-content: flex-end;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            border-radius: 5px;
-            border: none;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-        }
-        
-        .btn:hover {
-            background-color: #1f4b7a;
-            transform: translateY(-2px);
-        }
-        
-        .btn i {
-            margin-right: 8px;
-        }
-        
-        .divider {
-            height: 1px;
-            background-color: #e9ecef;
-            margin: 30px 0;
-        }
-        
-        .toggle-sidebar {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--dark);
-            font-size: 20px;
-            cursor: pointer;
-            margin-right: 15px;
-        }
-        
-        .team-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        
-        .team-member {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: all 0.3s ease;
-            border-top: 4px solid var(--primary);
-        }
-        
-        .team-member:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .member-name {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--dark);
-        }
-        
-        .member-position {
-            color: var(--primary);
-            font-size: 14px;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-        
-        .member-contact {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .section-title {
-            font-size: 22px;
-            color: var(--dark);
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-
-        .maps-container {
-            margin-top: 30px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .maps-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-            z-index: 1;
-        }
-
-        .map-header {
-            padding: 25px 30px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .map-header h3 {
-            color: var(--dark);
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-        }
-
-        .map-header h3 i {
-            color: var(--primary);
-            margin-right: 12px;
-            font-size: 24px;
-        }
-
-        .map-header p {
-            color: #6c757d;
-            font-size: 14px;
-            margin: 0;
-        }
-
-        .map-content {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 0;
-            min-height: 450px;
-        }
-
-        .map-iframe-container {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .map-iframe {
-            width: 100%;
-            height: 450px;
-            border: none;
-            transition: all 0.3s ease;
-            filter: contrast(1.1) saturate(1.1);
-        }
-
-        .map-iframe-container:hover .map-iframe {
-            filter: contrast(1.15) saturate(1.15) brightness(1.05);
-        }
-
-        .map-preview-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(42, 92, 141, 0.9), rgba(58, 158, 253, 0.8));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: all 0.3s ease;
-            pointer-events: none;
-            backdrop-filter: blur(2px);
-        }
-
-        .map-iframe-container:hover .map-preview-overlay {
-            opacity: 1;
-        }
-
-        .preview-content {
-            text-align: center;
-            color: white;
-            transform: translateY(10px);
-            transition: transform 0.3s ease;
-        }
-
-        .map-iframe-container:hover .preview-content {
-            transform: translateY(0);
-        }
-
-        .preview-content i {
-            font-size: 48px;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .preview-content p {
-            font-size: 16px;
-            font-weight: 500;
-            margin: 0;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .map-sidebar {
-            background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .location-details {
-            flex: 1;
-        }
-
-        .detail-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            transition: all 0.3s ease;
-            border-left: 4px solid var(--primary);
-        }
-
-        .detail-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-        }
-
-        .detail-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: white;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-
-        .detail-content h4 {
-            color: var(--dark);
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .detail-content p {
-            color: #6c757d;
-            font-size: 13px;
-            line-height: 1.5;
-            margin: 0;
-        }
-
-        .floating-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 8px 15px;
-            border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            animation: pulse 2s infinite;
-        }
-
-        .floating-badge i {
-            color: var(--success);
-            margin-right: 8px;
-            font-size: 12px;
-            animation: bounce 1.5s infinite;
-        }
-
-        .floating-badge span {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 6px 16px rgba(40, 167, 69, 0.3);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-3px);
-            }
-            60% {
-                transform: translateY(-1px);
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .card {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-        
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
-        .card:nth-child(5) { animation-delay: 0.5s; }
-        .card:nth-child(6) { animation-delay: 0.6s; }
-        .card:nth-child(7) { animation-delay: 0.7s; }
-        .card:nth-child(8) { animation-delay: 0.8s; }
-        .card:nth-child(9) { animation-delay: 0.9s; }
-        
-        .team-member {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-        
-        .team-member:nth-child(1) { animation-delay: 0.2s; }
-        .team-member:nth-child(2) { animation-delay: 0.3s; }
-        .team-member:nth-child(3) { animation-delay: 0.4s; }
-        .team-member:nth-child(4) { animation-delay: 0.5s; }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .map-content {
-                grid-template-columns: 1fr;
-            }
-
-            .map-sidebar {
-                padding: 25px;
-            }
-        }
-
-        @media (max-width: 992px) {
-            .sidebar {
-                width: 70px;
-            }
-            
-            .sidebar .hospital-name,
-            .sidebar .partner-logos,
-            .sidebar .nav-link span {
-                display: none;
-            }
-            
-            .sidebar .logo-container {
-                justify-content: center;
-                padding: 10px;
-            }
-            
-            .main-content {
-                margin-left: 70px;
-            }
-            
-            .toggle-sidebar {
-                display: block;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .cards-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .team-container {
-                grid-template-columns: 1fr;
-            }
-
-            .map-header {
-                padding: 20px;
-            }
-
-            .map-sidebar {
-                padding: 20px;
-            }
-
-            .map-iframe {
-                height: 300px;
-            }
-
-            .detail-item {
-                padding: 12px;
-            }
-
-            .detail-icon {
-                width: 35px;
-                height: 35px;
-            }
-            
-            .page-title h1 {
-                font-size: 24px;
-            }
-        }
-
-        /* Background untuk p */
-        p {
-            background-image: url('Warna.png');
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Security - RS Mata Achmad Wardi</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --brand:#0d6c8c;--ink:#0a2f40;--bg:#f2f6f9;--surface:#fff;--line:#e1e9ee;--text:#12232e;--muted:#5d6e7a;--soft:#e6f2f7;--shadow:0 10px 30px rgba(10,47,64,.08);
+  --side:268px;--r:16px;
+}
+[data-theme=dark]{--bg:#0b1820;--surface:#112430;--line:#1f3846;--text:#e8f1f5;--muted:#8fa8b5;--soft:#16323f;--shadow:0 10px 30px rgba(0,0,0,.35);--ink:#071a24}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid #3a9efd;outline-offset:2px;border-radius:10px}
+
+/* Sidebar */
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--side);background:linear-gradient(180deg,var(--ink),#0c3c52);color:#fff;display:flex;flex-direction:column;padding:22px 16px;z-index:60;transition:transform .25s}
+.brand{display:flex;gap:12px;align-items:center;padding:2px 8px 20px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:14px}
+.brand .mark{flex:none;width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#3ab7d8,#1f8f7a);display:grid;place-items:center;font-size:21px;box-shadow:0 6px 16px rgba(58,183,216,.35)}
+.brand small{display:block;font-size:12px;color:#9fc3d3}
+.brand strong{display:block;font-size:17px;font-weight:800;line-height:1.2}
+.partners{display:flex;align-items:center;gap:8px;padding:0 8px 6px}
+.bwi{width:26px;height:26px;border-radius:50%;background:linear-gradient(45deg,#d4af37,#ffd700);color:#7a3e0a;display:grid;place-items:center;font-size:12px}
+.dompet{display:flex;align-items:center;gap:6px;background:#1f9d5a;border-radius:10px;padding:4px 9px;font-size:8px;font-weight:800;line-height:1.1;letter-spacing:.04em}
+.dompet i{width:0;height:0;border:6px solid transparent;border-bottom:9px solid #fff;border-top:0}
+.nav-group{font-size:12px;color:#7fa6b8;font-weight:600;padding:16px 10px 6px}
+.nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;color:#c6dbe5;font-size:14px;font-weight:500;transition:background .15s,color .15s;margin-bottom:2px}
+.nav a i{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-size:14px;background:rgba(255,255,255,.07)}
+.nav a:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav a.active{background:rgba(255,255,255,.14);color:#fff;font-weight:700}
+.nav a.active i{background:#fff;color:var(--ink)}
+.side-foot{margin-top:auto;display:flex;align-items:center;gap:10px;padding:14px 10px 0;border-top:1px solid rgba(255,255,255,.12);font-size:12px;color:#9fc3d3}
+.side-foot .dot{width:9px;height:9px;border-radius:50%;background:#37d67a;box-shadow:0 0 0 4px rgba(55,214,122,.2)}
+.scrim{display:none;position:fixed;inset:0;background:rgba(8,20,28,.55);z-index:50}
+
+/* Layout */
+.main{margin-left:var(--side);min-height:100vh}
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:12px;padding:14px 32px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.icon-btn{flex:none;width:42px;height:42px;border:1px solid var(--line);background:var(--surface);border-radius:12px;font-size:16px;cursor:pointer;color:var(--text);display:grid;place-items:center;transition:background .15s}
+.icon-btn:hover{background:var(--soft)}
+.menu-btn{display:none}
+.search{position:relative;flex:1;max-width:460px}
+.search i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px}
+.search input{width:100%;height:42px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:0 14px 0 40px;font:inherit;font-size:14px;color:var(--text)}
+.search input::placeholder{color:var(--muted)}
+.clock{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);text-align:right;white-space:nowrap}
+.clock b{display:block;color:var(--text);font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.content{padding:28px 32px 48px;max-width:1260px}
+
+.ti{margin-right:8px;font-size:.85em;color:var(--c,var(--brand));width:1.1em;text-align:center}
+[data-theme=dark] .ti{color:var(--c,#7fd0ea)}
+.cta .ti{margin:0 0 0 8px;color:inherit}
+.brand .ti,.nav-group .ti,.person.lead .ti{color:inherit;opacity:.85}
+.group-head span .ti{color:var(--muted)}
+.clock .ti{margin-right:6px;color:var(--muted)}
+.tile p .ti{color:var(--muted);opacity:.8}
+/* Groups & tiles */
+.hero{position:relative;overflow:hidden;background:linear-gradient(120deg,#082a3a,#0d6c8c 70%,#1a9aa0);color:#fff;border-radius:22px;padding:34px;margin-bottom:34px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+.hero::before{content:"";position:absolute;right:-60px;top:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.18),transparent 65%)}
+.hero .shield{position:absolute;right:34px;bottom:-34px;font-size:190px;color:rgba(255,255,255,.07);transform:rotate(-8deg)}
+.hero .ti{color:inherit;opacity:.85}
+.chip-live{position:relative;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);padding:6px 12px;border-radius:99px;font-size:12px;font-weight:600}
+.chip-live i{font-size:8px;color:#5af0a0}
+.chip-live i.ti{font-size:11px;color:#fff;margin:0;width:auto}
+.hero h1{position:relative;font-size:clamp(25px,3.4vw,36px);font-weight:800;letter-spacing:-.02em;line-height:1.15;max-width:540px}
+.hero p{position:relative;margin-top:10px;color:#c3dde8;font-size:15px;max-width:480px}
+.quick{position:relative;display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.quick a{display:inline-flex;align-items:center;gap:9px;background:#fff;color:#0a2f40;font-weight:700;font-size:14px;padding:12px 18px;border-radius:12px;transition:transform .15s}
+.quick a:hover{transform:translateY(-2px)}
+.quick a.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3)}
+.stats{position:relative;display:grid;gap:10px;min-width:190px;z-index:1}
+.stat{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(6px);border-radius:14px;padding:12px 16px}
+.stat i{font-size:17px;width:22px;text-align:center;color:#8fe3f5}
+.stat b{font-size:20px;font-weight:800;line-height:1;display:block}
+.stat span{font-size:12px;color:#c3dde8}
+@media (max-width:991px){.hero{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){.hero{padding:24px 20px}.stats{grid-template-columns:1fr}}
+.group{margin:0 0 36px}
+.group-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.group-head .gi{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-size:15px;color:#fff;background:var(--g)}
+.group-head h2{font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+.group-head span{display:block;font-size:13px;color:var(--muted);font-weight:400}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.tile{position:relative;display:flex;flex-direction:column;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;transition:border-color .2s,box-shadow .2s,transform .2s}
+.tile::after{content:"";position:absolute;left:20px;right:20px;bottom:-1px;height:3px;border-radius:3px 3px 0 0;background:var(--g);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.tile:hover{box-shadow:var(--shadow);transform:translateY(-3px);border-color:transparent}
+.tile:hover::after{transform:scaleX(1)}
+.tile .top{display:flex;justify-content:space-between;align-items:flex-start}
+.tile .ico{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:22px;color:#fff;background:var(--g);box-shadow:0 8px 18px var(--gs)}
+.tile .go{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:13px;color:var(--muted);background:var(--soft);transition:background .2s,color .2s,transform .2s}
+.tile:hover .go{background:var(--g);color:#fff;transform:rotate(-45deg)}
+.tile h3{font-size:16px;font-weight:700;line-height:1.3}
+.tile p{font-size:13px;color:var(--muted);margin-top:4px}
+.tile .cta{margin-top:auto;font-size:13px;font-weight:600;color:var(--c)}
+.t-blue{--g:linear-gradient(135deg,#3b82d6,#1f56a8);--gs:rgba(37,99,168,.3);--c:#2b6cc0}
+.t-teal{--g:linear-gradient(135deg,#1bb3a3,#0b7c78);--gs:rgba(15,138,126,.3);--c:#0f8a7e}
+.t-amber{--g:linear-gradient(135deg,#f5a02e,#d36a0a);--gs:rgba(211,106,10,.3);--c:#c2620a}
+[data-theme=dark] .t-blue{--c:#7fb2f0}[data-theme=dark] .t-teal{--c:#52d4c6}[data-theme=dark] .t-amber{--c:#f6b865}
+.empty{display:none;text-align:center;padding:48px 16px;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);margin-top:30px}
+.empty i{font-size:28px;margin-bottom:10px;display:block}
+
+/* Struktur organisasi */
+:root{--conn:#b3c5cf}
+[data-theme=dark]{--conn:#355a6d}
+.org{display:flex;flex-direction:column;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:34px 24px;box-shadow:var(--shadow)}
+.node{position:relative;display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 22px;min-width:300px;max-width:100%;transition:transform .2s,box-shadow .2s}
+.node:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.avatar{position:relative;flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:16px;background:var(--soft);color:var(--brand)}
+[data-theme=dark] .avatar{color:#7fd0ea}
+.node h3{font-size:16px;font-weight:700;line-height:1.3}
+.node p{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.4}
+.level{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--soft);color:var(--brand);margin-bottom:6px}
+[data-theme=dark] .level{color:#7fd0ea}
+.node.l1{background:linear-gradient(135deg,#082a3a,#0d6c8c);border:0;color:#fff;box-shadow:0 12px 28px rgba(13,108,140,.3)}
+.node.l1 .avatar{background:#fff;color:#0a2f40}
+.node.l1 p{color:#bfe0ec}
+.node.l1 .level{background:rgba(255,255,255,.16);color:#fff}
+.node.l2{border:2px solid #0d6c8c}
+.node.l3{border:2px solid #0f8a7e;background:linear-gradient(135deg,rgba(27,179,163,.1),transparent)}
+.node.l3 .avatar{background:linear-gradient(135deg,#1bb3a3,#0b7c78);color:#fff}
+.node.l3 .level{background:rgba(15,138,126,.14);color:#0f8a7e}
+[data-theme=dark] .node.l3 .level{color:#52d4c6}
+.vline{width:2px;height:30px;background:var(--conn)}
+.members{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:30px;width:100%;max-width:920px}
+.members::before{content:"";position:absolute;top:0;left:calc(100%/6);right:calc(100%/6);height:2px;background:var(--conn)}
+.members .node{min-width:0;flex-direction:column;text-align:center;padding:20px 16px}
+.members .node::before{content:"";position:absolute;top:-30px;left:50%;width:2px;height:30px;background:var(--conn);transform:translateX(-1px)}
+.members .avatar{width:50px;height:50px}
+
+/* Tim Security */
+.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.person{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.person h3{font-size:15px;font-weight:700;line-height:1.3}
+.person p{font-size:13px;color:var(--muted)}
+.person.lead{background:linear-gradient(135deg,#082a3a,#0d6c8c);border:0;color:#fff}
+.person.lead .avatar{background:#fff;color:#0a2f40}
+.person.lead .avatar::after{content:"\f3ed";font-family:"Font Awesome 6 Free";font-weight:900;position:absolute;right:-4px;bottom:-4px;width:22px;height:22px;border-radius:50%;background:#f5b02e;color:#5a3300;font-size:10px;display:grid;place-items:center;border:2px solid #0d6c8c}
+.person.lead p{color:#bfe0ec}
+@media (max-width:560px){.team{grid-template-columns:1fr}}
+
+/* Location */
+.place{display:grid;grid-template-columns:1.5fr 1fr;background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+.place iframe{width:100%;height:100%;min-height:420px;border:0;display:block}
+.info{padding:28px;display:flex;flex-direction:column;gap:20px}
+.info h3{font-size:19px;font-weight:700;line-height:1.3}
+.info .lead-p{font-size:14px;color:var(--muted);margin-top:4px}
+.row{display:flex;gap:14px}
+.row .ico{flex:none;width:40px;height:40px;border-radius:12px;background:var(--soft);color:var(--brand);display:grid;place-items:center;font-size:16px}
+[data-theme=dark] .row .ico{color:#7fd0ea}
+.row b{display:block;font-size:13px;font-weight:700}
+.row span{font-size:14px;color:var(--muted)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:12px;font-weight:600;font-size:14px;border:1px solid var(--brand);background:var(--brand);color:#fff;transition:filter .15s}
+.btn:hover{filter:brightness(.9)}
+.btn.alt{background:transparent;color:var(--brand)}
+[data-theme=dark] .btn.alt{color:#7fd0ea;border-color:#2a5668}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center}
+
+@media (max-width:991px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:none;box-shadow:8px 0 30px rgba(0,0,0,.3)}
+  .scrim.show{display:block}
+  .main{margin-left:0}
+  .menu-btn{display:grid}
+  .topbar,.content{padding-left:18px;padding-right:18px}
+  .place{grid-template-columns:1fr}
+  .place iframe{min-height:300px}
+}
+@media (max-width:560px){
+  .clock div{display:none}
+  .grid{grid-template-columns:1fr}
+  .node{min-width:0;width:100%}
+  .members{grid-template-columns:1fr;padding-top:0;gap:12px}
+  .members::before,.members .node::before{display:none}
+  .members .node{flex-direction:row;text-align:left}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
-    <div class="dashboard">
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="logo-container">
-                <div class="hospital-logo">
-                    <div class="main-logo-section">
-                        <div class="hospital-name">
-                            <div class="rs-text">RS Mata</div>
-                            <div class="main-text">Achmad Wardi</div>
-                        </div>
-                        <div class="logo-dots">
-                            <div class="dot dot-1"></div>
-                            <div class="dot dot-2"></div>
-                            <div class="dot dot-3"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="partner-logos">
-                        <div class="bwi-logo" title="Baitul Wakaf Indonesia"></div>
-                        <div class="dompet-logo" title="Dompet Dhuafa Hospital Network">
-                            <div class="dompet-triangle"></div>
-                            <div class="dompet-text">
-                                <div>DOMPET</div>
-                                <div>DHUAFA</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#" class="nav-link active">
-                        <i class="fas fa-home"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-procedures"></i>
-                        <span>IGD</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-comment-alt"></i>
-                        <span>Ulasan</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#team" class="nav-link">
-                        <i class="fas fa-users"></i>
-                        <span>Tim Security</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#maps" class="nav-link">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Lokasi</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="header">
-                <div class="page-title">
-                    <button class="toggle-sidebar" id="toggleSidebar">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h1>Dashboard Security RS Mata Achmad Wardi</h1>
-                </div>
-            </div>
-            
-            <div class="cards-container">
-                <!-- Laporan Harian -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Laporan Harian</div>
-                        <div class="card-icon daily-icon">
-                            <i class="fas fa-clipboard-list"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <!-- Konten dapat ditambahkan di sini -->
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://docs.google.com/spreadsheets/d/1MZQ_1zCx2Db4syKzVmq9eczAFv2P23Uw3BUcO0dlf9k/edit?gid=888408629#gid=888408629" target="_blank" class="btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            Buka Laporan
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Laporan Pasien IGD -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Laporan Pasien IGD</div>
-                        <div class="card-icon patient-icon">
-                            <i class="fas fa-procedures"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <!-- Konten dapat ditambahkan di sini -->
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSf5vzYj1YcuX_OeYeXZyxrkOn7_gaIWpaJgVp3gB0R5f3fhbQ/viewform" target="_blank" class="btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            Buka Laporan
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Laporan Ulasan Google -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Google Review</div>
-                        <div class="card-icon review-icon">
-                            <i class="fas fa-comment-alt"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <!-- Konten dapat ditambahkan di sini -->
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdUD5wL2vqHzN9dJZkCqKFkGe39KcC8qhNW-jPeyMvrnM8JsQ/viewform?usp=header" target="_blank" class="btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            Buka Laporan
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Laporan Patroli Harian -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Patroli Harian</div>
-                        <div class="card-icon patroli-icon">
-                            <i class="fas fa-shoe-prints"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <!-- Konten dapat ditambahkan di sini -->
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCVJe2eOynv9bmBvmXCXLkNZwXdg_MG9DcnGJ0D5U7xZqdKQ/viewform" target="_blank" class="btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            Buka Form Patroli
-                        </a>
-                    </div>
-                </div>
-    
-                <!-- Laporan Pengecekan Tandon Air Bersih -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Pengecekan Tandon Air Bersih</div>
-                        <div class="card-icon water-icon">
-                            <i class="fas fa-water"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <!-- Konten dapat ditambahkan di sini -->
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc2WeLuAGc-t7o51N6hXbZ2ThWXaykkGImu1nM2mBz2lput0w/viewform" target="_blank" class="btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            Buka Formulir
-                        </a>
-                    </div>
-                </div>
 
-                <!-- KESIAGAAN PELAYANAN -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Kesiagaan Pelayanan</div>
-                        <div class="card-icon readiness-icon">
-                            <i class="fas fa-ambulance"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <!-- Konten dapat ditambahkan di sini -->
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSftCJMRtrMJcWOHVg1XzzCE1m-M_Zvk_0I6XqQNzfpSfbjQpg/viewform" target="_blank" class="btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            Buka Formulir
-                        </a>
-                    </div>
-                </div>
+<aside class="sidebar" id="sidebar" aria-label="Menu utama">
+  <div class="brand">
+    <div class="mark"><i class="fas fa-user-shield"></i></div>
+    <div><small><i class="fas fa-eye ti"></i>RS Mata</small><strong>Achmad Wardi</strong></div>
+  </div>
+  <div class="partners">
+    <div class="bwi" title="Baitul Wakaf Indonesia">☪</div>
+    <div class="dompet" title="Dompet Dhuafa Hospital Network"><i></i><div>DOMPET<br>DHUAFA</div></div>
+  </div>
+  <nav class="nav">
+    <a href="#top" class="active"><i class="fas fa-gauge-high"></i>Dashboard</a>
+    <div class="nav-group"><i class="fas fa-folder-open ti"></i>Formulir</div>
+    <a href="#laporan"><i class="fas fa-file-lines"></i>Laporan</a>
+    <a href="#rutin"><i class="fas fa-shield-halved"></i>Pemeriksaan rutin</a>
+    <a href="#barang"><i class="fas fa-suitcase-medical"></i>Barang pasien</a>
+    <div class="nav-group"><i class="fas fa-circle-info ti"></i>Informasi</div>
+    <a href="#team"><i class="fas fa-sitemap"></i>Struktur organisasi</a>
+    <a href="#anggota"><i class="fas fa-people-group"></i>Tim Security</a>
+    <a href="#maps"><i class="fas fa-map-location-dot"></i>Lokasi</a>
+  </nav>
+  <div class="side-foot"><span class="dot"></span><i class="fas fa-user-shield ti" style="margin:0"></i>Dashboard Security</div>
+</aside>
+<div class="scrim" id="scrim"></div>
 
-                <!-- ============================================ -->
-                <!-- CARD PENGECEKAN CCTV (warna sama dgn card lain) -->
-                <!-- ============================================ -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Pengecekan CCTV</div>
-                        <div class="card-icon cctv-icon">
-                            <i class="fas fa-video"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://rsmataachmadwardi.github.io/Pengecekan-cctv/" target="_blank" class="btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            Buka link pengecekan cctv
-                        </a>
-                    </div>
-                </div>
-                <!-- ============================================ -->
-                <!-- END CARD CCTV                                -->
-                <!-- ============================================ -->
-
-                <!-- KEHILANGAN BARANG -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Kehilangan Barang</div>
-                        <div class="card-icon lost-icon">
-                            <i class="fas fa-search"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <!-- Konten dapat ditambahkan di sini -->
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSepLrGheO6j5obLFwoAukhsveA8Mr_6y9EQ6HVy2yCKEkDWHA/viewform" target="_blank" class="btn">
-                            <i class="fas fa-external-link-alt"></i>
-                            Buka Formulir 
-                        </a>
-                    </div>
-                </div>
-
-                <!-- FORM PENITIPAN BARANG MILIK PASIEN -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Penitipan Barang Milik Pasien</div>
-                        <div class="card-icon doc-icon">
-                            <i class="fas fa-box-archive"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                    </div>
-                    <div class="card-footer">
-                        <a href="Form penitipan barang milik pasien.pdf" target="_blank" class="btn">
-                            <i class="fas fa-file-pdf"></i>
-                            Buka Formulir
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="divider"></div>
-            
-            <!-- Team Security Section -->
-            <h2 class="section-title" id="team">Tim Security RS Mata Achmad Wardi</h2>
-            
-            <div class="team-container">
-                <div class="team-member">
-                    <h3 class="member-name">Hendri Hermawan</h3>
-                    <p class="member-position">Penanggung jawab Security</p>
-                    <div class="member-contact">
-                        <!-- Kontak dapat ditambahkan di sini -->
-                    </div>
-                </div>
-                
-                <div class="team-member">
-                    <h3 class="member-name">Wahyudi</h3>
-                    <p class="member-position">Anggota Security</p>
-                    <div class="member-contact">
-                        <!-- Kontak dapat ditambahkan di sini -->
-                    </div>
-                </div>
-                
-                <div class="team-member">
-                    <h3 class="member-name">Erwin</h3>
-                    <p class="member-position">Anggota Security</p>
-                    <div class="member-contact">
-                        <!-- Kontak dapat ditambahkan di sini -->
-                    </div>
-                </div>
-                
-                <div class="team-member">
-                    <h3 class="member-name">Irfan</h3>
-                    <p class="member-position">Anggota Security</p>
-                    <div class="member-contact">
-                        <!-- Kontak dapat ditambahkan di sini -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="divider"></div>
-            
-            <!-- Location Section -->
-            <h2 class="section-title" id="maps">Lokasi RS Mata Achmad Wardi</h2>
-            
-            <div class="maps-container">
-                <div class="map-header">
-                    <h3>
-                        <i class="fas fa-hospital"></i>
-                        Rumah Sakit Mata Achmad Wardi
-                    </h3>
-                    <p>Melayani kesehatan mata terbaik untuk masyarakat Banten</p>
-                </div>
-                
-                <div class="map-content">
-                    <div class="map-iframe-container">
-                        <div class="floating-badge">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Lokasi Aktif</span>
-                        </div>
-                        
-                        <div class="map-preview-overlay">
-                            <div class="preview-content">
-                                <i class="fas fa-map-marked-alt"></i>
-                                <p>Klik untuk melihat peta interaktif</p>
-                            </div>
-                        </div>
-                        
-                        <iframe 
-                            class="map-iframe" 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.9476!2d106.1360608!3d-6.1154374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e418b20975ae817:0xb3e0348e07faa09b!2sRumah%20Sakit%20Mata%20Achmad%20Wardi!5e0!3m2!1sid!2sid!4v1692876543210!5m2!1sid!2sid" 
-                            allowfullscreen="" 
-                            loading="lazy"
-                            title="Lokasi RS Mata Achmad Wardi">
-                        </iframe>
-                    </div>
-                    
-                    <div class="map-sidebar">
-                        <div class="location-details">
-                            <div class="detail-item">
-                                <div class="detail-icon">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div class="detail-content">
-                                    <h4>Alamat</h4>
-                                    <p>Jl. Raya Taktakan No.Km. 1, Lontarbaru, Kec. Serang, Kota Serang, Banten 42115</p>
-                                </div>
-                            </div>
-                            
-                            <div class="detail-item">
-                                <div class="detail-icon">
-                                    <i class="fas fa-phone"></i>
-                                </div>
-                                <div class="detail-content">
-                                    <h4>Telepon</h4>
-                                    <p>081383830313</p>
-                                </div>
-                            </div>
-                            
-                            <div class="detail-item">
-                                <div class="detail-icon">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div class="detail-content">
-                                    <h4>Email</h4>
-                                    <p>info@rsmataachmadwardi.com</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="main" id="top">
+  <header class="topbar">
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Buka menu" aria-controls="sidebar"><i class="fas fa-bars"></i></button>
+    <label class="search">
+      <i class="fas fa-magnifying-glass"></i>
+      <input type="search" id="q" placeholder="Cari laporan atau formulir" aria-label="Cari laporan atau formulir">
+    </label>
+    <div class="clock">
+      <div><b><i class="fas fa-clock ti"></i><span id="time">--:--</span></b><span><i class="fas fa-calendar-days ti"></i><span id="date"></span></span></div>
+      <button class="icon-btn" id="theme" aria-label="Ganti tema"><i class="fas fa-moon"></i></button>
     </div>
+  </header>
 
-    <script>
-        // Toggle sidebar functionality
-        document.getElementById('toggleSidebar').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
-        });
-    </script>
+  <main class="content">
+    <section class="hero">
+      <i class="fas fa-shield-heart shield" aria-hidden="true"></i>
+      <div>
+        <span class="chip-live"><i class="fas fa-circle"></i><i class="fas fa-eye ti"></i>RS Mata Achmad Wardi</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><i class="fas fa-layer-group"></i><div><b>9</b><span>Layanan</span></div></div>
+        <div class="stat"><i class="fas fa-user-shield"></i><div><b>4</b><span>Petugas</span></div></div>
+        <div class="stat"><i class="fas fa-folder-tree"></i><div><b>3</b><span>Kategori</span></div></div>
+      </div>
+    </section>
+
+    <div class="empty" id="empty"><i class="fas fa-magnifying-glass"></i>Tidak ada hasil untuk pencarian ini. Coba kata kunci lain.</div>
+
+    <section class="group" id="laporan">
+      <div class="group-head"><div class="gi t-blue"><i class="fas fa-file-lines"></i></div><h2>Laporan<span><i class="fas fa-pen-to-square ti"></i>Catat kejadian dan pantau laporan</span></h2></div>
+      <div class="grid">
+        <a class="tile t-blue" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1MZQ_1zCx2Db4syKzVmq9eczAFv2P23Uw3BUcO0dlf9k/edit?gid=888408629#gid=888408629">
+          <div class="top"><div class="ico"><i class="fas fa-clipboard-check"></i></div><div class="go"><i class="fas fa-arrow-right"></i></div></div>
+          <div><h3><i class="fas fa-calendar-day ti"></i>Laporan Harian</h3><p><i class="fas fa-circle-info ti"></i>Rekap kejadian dan aktivitas harian</p></div><div class="cta">Buka laporan<i class="fas fa-arrow-up-right-from-square ti"></i></div></a>
+        <a class="tile t-blue" target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLSf5vzYj1YcuX_OeYeXZyxrkOn7_gaIWpaJgVp3gB0R5f3fhbQ/viewform">
+          <div class="top"><div class="ico"><i class="fas fa-truck-medical"></i></div><div class="go"><i class="fas fa-arrow-right"></i></div></div>
+          <div><h3><i class="fas fa-hospital ti"></i>Laporan Pasien IGD</h3><p><i class="fas fa-circle-info ti"></i>Catat pasien yang masuk IGD</p></div><div class="cta">Buka laporan<i class="fas fa-arrow-up-right-from-square ti"></i></div></a>
+        <a class="tile t-blue" target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLSdUD5wL2vqHzN9dJZkCqKFkGe39KcC8qhNW-jPeyMvrnM8JsQ/viewform?usp=header">
+          <div class="top"><div class="ico"><i class="fas fa-star"></i></div><div class="go"><i class="fas fa-arrow-right"></i></div></div>
+          <div><h3><i class="fas fa-comments ti"></i>Google Review</h3><p><i class="fas fa-circle-info ti"></i>Pantau ulasan dari pengunjung</p></div><div class="cta">Buka laporan<i class="fas fa-arrow-up-right-from-square ti"></i></div></a>
+      </div>
+    </section>
+
+    <section class="group" id="rutin">
+      <div class="group-head"><div class="gi t-teal"><i class="fas fa-shield-halved"></i></div><h2>Pemeriksaan rutin<span><i class="fas fa-list-check ti"></i>Patroli dan pengecekan fasilitas</span></h2></div>
+      <div class="grid">
+        <a class="tile t-teal" target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLSeCVJe2eOynv9bmBvmXCXLkNZwXdg_MG9DcnGJ0D5U7xZqdKQ/viewform">
+          <div class="top"><div class="ico"><i class="fas fa-route"></i></div><div class="go"><i class="fas fa-arrow-right"></i></div></div>
+          <div><h3><i class="fas fa-person-walking ti"></i>Patroli Harian</h3><p><i class="fas fa-circle-info ti"></i>Catat rute dan temuan saat patroli</p></div><div class="cta">Buka form patroli<i class="fas fa-arrow-up-right-from-square ti"></i></div></a>
+        <a class="tile t-teal" target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLSc2WeLuAGc-t7o51N6hXbZ2ThWXaykkGImu1nM2mBz2lput0w/viewform">
+          <div class="top"><div class="ico"><i class="fas fa-droplet"></i></div><div class="go"><i class="fas fa-arrow-right"></i></div></div>
+          <div><h3><i class="fas fa-faucet-drip ti"></i>Pengecekan Tandon Air Bersih</h3><p><i class="fas fa-circle-info ti"></i>Periksa kondisi tandon air</p></div><div class="cta">Buka formulir<i class="fas fa-arrow-up-right-from-square ti"></i></div></a>
+        <a class="tile t-teal" target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLSftCJMRtrMJcWOHVg1XzzCE1m-M_Zvk_0I6XqQNzfpSfbjQpg/viewform">
+          <div class="top"><div class="ico"><i class="fas fa-bell-concierge"></i></div><div class="go"><i class="fas fa-arrow-right"></i></div></div>
+          <div><h3><i class="fas fa-heart-pulse ti"></i>Kesiagaan Pelayanan</h3><p><i class="fas fa-circle-info ti"></i>Pastikan layanan siap digunakan</p></div><div class="cta">Buka formulir<i class="fas fa-arrow-up-right-from-square ti"></i></div></a>
+        <a class="tile t-teal" target="_blank" rel="noopener" href="https://rsmataachmadwardi.github.io/Pengecekan-cctv/">
+          <div class="top"><div class="ico"><i class="fas fa-video"></i></div><div class="go"><i class="fas fa-arrow-right"></i></div></div>
+          <div><h3><i class="fas fa-eye ti"></i>Pengecekan CCTV</h3><p><i class="fas fa-circle-info ti"></i>Periksa kondisi kamera pengawas</p></div><div class="cta">Buka halaman pengecekan<i class="fas fa-arrow-up-right-from-square ti"></i></div></a>
+      </div>
+    </section>
+
+    <section class="group" id="barang">
+      <div class="group-head"><div class="gi t-amber"><i class="fas fa-suitcase-medical"></i></div><h2>Barang pasien dan pengunjung<span><i class="fas fa-bag-shopping ti"></i>Kehilangan dan penitipan</span></h2></div>
+      <div class="grid">
+        <a class="tile t-amber" target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLSepLrGheO6j5obLFwoAukhsveA8Mr_6y9EQ6HVy2yCKEkDWHA/viewform">
+          <div class="top"><div class="ico"><i class="fas fa-magnifying-glass-location"></i></div><div class="go"><i class="fas fa-arrow-right"></i></div></div>
+          <div><h3><i class="fas fa-box-open ti"></i>Kehilangan Barang</h3><p><i class="fas fa-circle-info ti"></i>Laporkan barang yang hilang</p></div><div class="cta">Buka formulir<i class="fas fa-arrow-up-right-from-square ti"></i></div></a>
+        <a class="tile t-amber" target="_blank" rel="noopener" href="Form penitipan barang milik pasien.pdf">
+          <div class="top"><div class="ico"><i class="fas fa-box-archive"></i></div><div class="go"><i class="fas fa-arrow-right"></i></div></div>
+          <div><h3><i class="fas fa-lock ti"></i>Penitipan Barang Milik Pasien</h3><p><i class="fas fa-circle-info ti"></i>Formulir titip barang dalam bentuk PDF</p></div><div class="cta">Buka formulir<i class="fas fa-file-pdf ti"></i></div></a>
+      </div>
+    </section>
+
+    <section class="group" id="team">
+      <div class="group-head"><div class="gi t-blue"><i class="fas fa-sitemap"></i></div><h2>Struktur Organisasi<span><i class="fas fa-hospital ti"></i>Security RS Mata Achmad Wardi</span></h2></div>
+      <div class="org">
+        <div class="node l1"><div class="avatar">R</div><div><span class="level"><i class="fas fa-building-user"></i>Manajer</span><h3>Rendra</h3><p>Manajer Pengembangan RS</p></div></div>
+        <div class="vline"></div>
+        <div class="node l2"><div class="avatar">A</div><div><span class="level"><i class="fas fa-helmet-safety"></i>Kepala Unit</span><h3>Ahyar</h3><p>Kanit Manajemen Fasilitas dan Keselamatan (MFK)</p></div></div>
+        <div class="vline"></div>
+        <div class="node l3"><div class="avatar">HH</div><div><span class="level"><i class="fas fa-user-shield"></i>Penanggung jawab</span><h3>Hendri Hermawan</h3><p>Penanggung jawab Security</p></div></div>
+        <div class="vline"></div>
+        <div class="members">
+          <div class="node"><div class="avatar">W</div><div><span class="level"><i class="fas fa-shield-halved"></i>Anggota</span><h3>Wahyudi</h3><p>Anggota Security</p></div></div>
+          <div class="node"><div class="avatar">I</div><div><span class="level"><i class="fas fa-shield-halved"></i>Anggota</span><h3>Irfansyah</h3><p>Anggota Security</p></div></div>
+          <div class="node"><div class="avatar">ME</div><div><span class="level"><i class="fas fa-shield-halved"></i>Anggota</span><h3>Muhamad Erwin</h3><p>Anggota Security</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="group" id="anggota">
+      <div class="group-head"><div class="gi t-teal"><i class="fas fa-people-group"></i></div><h2>Tim Security<span><i class="fas fa-hospital ti"></i>RS Mata Achmad Wardi</span></h2></div>
+      <div class="team">
+        <div class="person lead"><div class="avatar">HH</div><div><h3><i class="fas fa-user ti"></i>Hendri Hermawan</h3><p><i class="fas fa-user-tie ti"></i>Penanggung jawab Security</p></div></div>
+        <div class="person"><div class="avatar">W</div><div><h3><i class="fas fa-user ti"></i>Wahyudi</h3><p><i class="fas fa-shield-halved ti"></i>Anggota Security</p></div></div>
+        <div class="person"><div class="avatar">IR</div><div><h3><i class="fas fa-user ti"></i>Irfansyah</h3><p><i class="fas fa-shield-halved ti"></i>Anggota Security</p></div></div>
+        <div class="person"><div class="avatar">ME</div><div><h3><i class="fas fa-user ti"></i>Muhamad Erwin</h3><p><i class="fas fa-shield-halved ti"></i>Anggota Security</p></div></div>
+      </div>
+    </section>
+
+    <section class="group" id="maps">
+      <div class="group-head"><div class="gi t-teal"><i class="fas fa-map-location-dot"></i></div><h2>Lokasi<span><i class="fas fa-hospital ti"></i>RS Mata Achmad Wardi</span></h2></div>
+      <div class="place">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.9476!2d106.1360608!3d-6.1154374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e418b20975ae817:0xb3e0348e07faa09b!2sRumah%20Sakit%20Mata%20Achmad%20Wardi!5e0!3m2!1sid!2sid!4v1692876543210!5m2!1sid!2sid" allowfullscreen loading="lazy" title="Lokasi RS Mata Achmad Wardi"></iframe>
+        <div class="info">
+          <div><h3><i class="fas fa-hospital ti"></i>Rumah Sakit Mata Achmad Wardi</h3><p class="lead-p"><i class="fas fa-heart-pulse ti"></i>Melayani kesehatan mata terbaik untuk masyarakat Banten</p></div>
+          <div class="row"><span class="ico"><i class="fas fa-location-dot"></i></span><div><b><i class="fas fa-signs-post ti"></i>Alamat</b><span>Jl. Raya Taktakan No.Km. 1, Lontarbaru, Kec. Serang, Kota Serang, Banten 42115</span></div></div>
+          <div class="row"><span class="ico"><i class="fas fa-phone-volume"></i></span><div><b><i class="fas fa-phone ti"></i>Telepon</b><span>081383830313</span></div></div>
+          <div class="row"><span class="ico"><i class="fas fa-envelope"></i></span><div><b><i class="fas fa-at ti"></i>Email</b><span>info@rsmataachmadwardi.com</span></div></div>
+          <div class="actions">
+            <a class="btn" href="tel:081383830313"><i class="fas fa-phone"></i>Telepon</a>
+            <a class="btn alt" href="mailto:info@rsmataachmadwardi.com"><i class="fas fa-envelope"></i>Kirim email</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer><i class="fas fa-eye"></i>RS Mata Achmad Wardi · Dashboard Security</footer>
+  </main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const sidebar=$('#sidebar'),scrim=$('#scrim');
+function setMenu(o){sidebar.classList.toggle('open',o);scrim.classList.toggle('show',o)}
+$('#menuBtn').onclick=()=>setMenu(!sidebar.classList.contains('open'));
+scrim.onclick=()=>setMenu(false);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+sidebar.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+
+// Tema
+function setTheme(t){
+  document.documentElement.dataset.theme=t;
+  $('#theme i').className='fas '+(t==='dark'?'fa-sun':'fa-moon');
+  try{localStorage.setItem('theme',t)}catch(e){}
+}
+let saved=null;try{saved=localStorage.getItem('theme')}catch(e){}
+setTheme(saved||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+$('#theme').onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
+
+// Salam dan jam
+function tick(){
+  const d=new Date(),h=d.getHours();
+  $('#time').textContent=d.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}).replace('.',':');
+  $('#date').textContent=d.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'});
+}
+tick();setInterval(tick,30000);
+
+// Pencarian
+$('#q').addEventListener('input',e=>{
+  const v=e.target.value.trim().toLowerCase();let total=0;
+  document.querySelectorAll('.group').forEach(g=>{
+    const tiles=g.querySelectorAll('.tile');
+    if(!tiles.length)return;
+    let n=0;
+    tiles.forEach(t=>{const m=t.textContent.toLowerCase().includes(v);t.style.display=m?'':'none';if(m)n++});
+    g.style.display=n?'':'none';total+=n;
+  });
+  $('#empty').style.display=v&&!total?'block':'none';
+});
+
+// Menu aktif saat scroll
+const links=[...document.querySelectorAll('.nav a')];
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting)links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));
+}),{rootMargin:'-30% 0px -60% 0px'});
+document.querySelectorAll('#top,.group[id]').forEach(s=>io.observe(s));
+</script>
 </body>
 </html>
